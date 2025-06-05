@@ -168,11 +168,11 @@ public class Node {
     }
     
     /**
-     * This goes hand-in-hand with equals()
-     * If two objects are equal, they MUST have the same hash code.
+     * This works with equals()
+     * If two objects are equal, they have to have the same hash code.
      * 
      * We have this to make sure each position in the grid has "a unique ID number".
-     * This will make sure the HashSets and PriorityQueues work and don't get confused.
+     * which will make sure the HashSets and PriorityQueues work and don't get confused.
      */
     @Override
     public int hashCode() {
