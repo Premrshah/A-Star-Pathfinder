@@ -7,14 +7,13 @@ import java.util.*;
  * A* uses heuristics to guide the search toward the goal more efficiently.
  */
 public class RoutePlanner {
-    private PriorityQueue<Node> openSet;  // nodes we still need to check
-    private List<Node> closedSet;         // nodes we've already checked
+    private PriorityQueue<Node> openSet;  // what to check
+    private List<Node> closedSet;         // what we've already checked
 
-    private Node goal;                    // where we're trying to go
+    private Node goal;                    
 
     /**
      * Creates a new route planner with a start and goal node.
-     * Sets up the priority queue with our custom comparator to sort by fCost.
      */
     public RoutePlanner(Node start, Node goal) {
         openSet = new PriorityQueue<>(new NodeComparator());  // sorts nodes by their fCost
@@ -55,18 +54,18 @@ public class RoutePlanner {
     public ArrayList<Node> findPath() {
         // Keep going as long as we have nodes to check
         while (openSet.size() > 0) {
-            // Grab the most promising node (lowest fCost)
+            // Grab the best node (lowest fCost)
             Node current = openSet.poll();
-            closedSet.add(current);  // Mark it as checked
+            closedSet.add(current);  // Mark node as checked
 
-            // Woohoo! We found the goal!
+            // found goal
             if (current.equals(goal)) {
-                // Now we need to trace back through the parents to get the full path
+                // trace back through the parents to get the full path
                 ArrayList<Node> path = new ArrayList<>();
                 Node temp = current;
                 while (temp != null) {
-                    path.add(0, temp);  // Add to front so path is in correct order
-                    temp = temp.parent;  // Go to previous node in path
+                    path.add(0, temp); 
+                    temp = temp.parent;  
                 }
                 return path;
             }
@@ -82,18 +81,18 @@ public class RoutePlanner {
                 // (just using 1 as the distance between adjacent nodes)
                 int tentativeGCost = current.getGcost() + 1;
 
-                // If this path to neighbor is better than any previous one
+                // Condition to check if this path to neighbor is better than any previous one
                 if (!openSet.contains(neighbor) || tentativeGCost < neighbor.getGcost()) {
                     // Update the neighbor with better path info
                     neighbor.setgCost(tentativeGCost);
                     
-                    // Manhattan distance - like counting city blocks
+                    // Manhattan distance calculation to get hcost which calculates distance to goal
                     int hCost = Math.abs(neighbor.getRow() - goal.getRow()) + 
                                 Math.abs(neighbor.getCol() - goal.getCol());
                     neighbor.sethCost(hCost);
                     neighbor.calculateFcost();
                     
-                    // Remember how we got here (for backtracking later) and adding the nodes we went through for the final arraylist
+                    // Remember how we got here for backtracking so we adding the nodes we went through for the final arraylist
                     neighbor.parent = current;
 
                     // Add to our to-do list to check the neighbors if they aren't already there
@@ -123,12 +122,14 @@ public class RoutePlanner {
     class NodeComparator implements Comparator<Node> {
         @Override
         public int compare(Node a, Node b) {
-            // Simple comparison - lower fCost gets priority
+            // lower fCost gets priority
             return Integer.compare(a.getFCost(), b.getFCost());
         }
     }
 
-    // Previous testing
+    /**
+     * Previous testing
+     */
     public static void main(String[] args) {
         // Node start = new Node(1, 1, false, true, false);
         // Node goal = new Node(9, 9, false, false, true);
