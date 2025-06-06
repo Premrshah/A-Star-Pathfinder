@@ -4,16 +4,15 @@ import java.util.*;
 import javax.swing.JFrame;
 
 /**
- * This class represents our grid world where the pathfinding happens.
- * It keeps track of all the nodes in a 2D grid and handles displaying them.
+ * This class represents our grid world where the pathfinding happens. It keeps
+ * track of all the nodes in a 2D grid and handles displaying them.
  */
 public class Map {
-    // Our grid of nodes - static so it can be accessed from anywhere
-    public static Node[][] grid = new Node[10][10];
-    
-	int startRow, startCol, endRow, endCol;	
+
+	// Our grid of nodes - static so it can be accessed from anywhere
+	public static Node[][] grid = new Node[10][10];
+	int startRow, startCol, endRow, endCol;
 	Drawing display;
-	
 
 	/**
 	 * Creates a fresh 10x10 grid with empty nodes and sets up the display.
@@ -24,12 +23,12 @@ public class Map {
 
 		// Make a 10x10 2d array of nodes
 		grid = new Node[10][10];
-		
 		for (int row = 0; row < grid.length; row++) {
 			for (int col = 0; col < grid[row].length; col++) {
 				grid[row][col] = new Node(row, col, false, false, false);
 			}
 		}
+
 	}
 
 	/**
@@ -45,5 +44,4 @@ public class Map {
 	public void displayPath(ArrayList<Node> list) {
 		display.displayPath(list);
 	}
-
 }
